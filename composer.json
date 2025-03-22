@@ -1,0 +1,13 @@
+{
+    "name": "maxim/bot-weather",
+    "description": "tg_bot",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Raychuk Maxim"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
