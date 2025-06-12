@@ -15,17 +15,23 @@ function getMagneticStormStatus() {
 
     if (is_array($json) && count($json) > 0) {
         $lastEntry = end($json);
-        $kIndex = $lastEntry['k_index'];
+        $kIndex = $lastEntry['kp_index']; // Индекс
+        $timeTag = $lastEntry['time_tag']; // Время в ISO формате
+
+        // Преобразуем дату/время
+        $date = new DateTime($timeTag);
+        $formattedTime = $date->format("H:i:s d.m.Y");
 
         if ($kIndex >= 5) {
-            return "⚠️ Сейчас наблюдается магнитная буря! Уровень K-индекса: $kIndex.";
+            return "⚠️ Сейчас наблюдается магнитная буря!\nУровень K-индекса в обсерватории Боулдера США: $kIndex\nВремя измерения: $formattedTime.";
         } else {
-            return "✅ Магнитной бури сейчас нет. Уровень K-индекса: $kIndex.";
+            return "✅ Магнитной бури сейчас нет.\nУровень K-индекса в обсерватории Боулдера США: $kIndex\nВремя измерения: $formattedTime.";
         }
     } else {
         return "❌ Не удалось получить данные о магнитной активности.";
     }
 }
+
 
 $content = file_get_contents("php://input");
 $update = json_decode($content, true);
