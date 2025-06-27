@@ -19,13 +19,14 @@ function getMagneticStormStatus() {
         $timeTag = $lastEntry['time_tag']; // Время в ISO формате
 
         // Преобразуем дату/время
-        $date = new DateTime($timeTag);
+        $date = new DateTime($timeTag, new DateTimeZone('UTC'));
+        $date->setTimezone(new DateTimeZone('Europe/Moscow'));
         $formattedTime = $date->format("H:i:s d.m.Y");
-
+        
         if ($kIndex >= 5) {
-            return "⚠️ Сейчас наблюдается магнитная буря!\nУровень K-индекса в обсерватории Боулдера США: $kIndex\nВремя измерения: $formattedTime.";
+            return "⚠️ Сейчас наблюдается магнитная буря!\nУровень K-индекса в обсерватории Боулдера США: $kIndex\nВремя измерения по МСК: $formattedTime.";
         } else {
-            return "✅ Магнитной бури сейчас нет.\nУровень K-индекса в обсерватории Боулдера США: $kIndex\nВремя измерения: $formattedTime.";
+            return "✅ Магнитной бури сейчас нет.\nУровень K-индекса в обсерватории Боулдера США: $kIndex\nВремя измерения по МСК: $formattedTime.";
         }
     } else {
         return "❌ Не удалось получить данные о магнитной активности.";
